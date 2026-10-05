@@ -1,0 +1,44 @@
+Database Design - Feature 2
+
+1. New tables:
+- rangers
+- treatments
+
+2. Fields and data types:
+Table: rangers
+- id: INT / SERIAL
+- name: VARCHAR(100)
+- specialty: VARCHAR(100)
+- years_of_service: INT
+
+Table: treatments
+- id: INT / SERIAL
+- date: DATE
+- animal_id: INT
+- ranger_id: INT
+- reserve_id: INT
+- outcome: VARCHAR(20) (healthy, treated, relocated)
+
+3. Primary Keys:
+- rangers: id
+- treatments: id
+
+4. Foreign Keys:
+- treatments.animal_id references animals(id)
+- treatments.ranger_id references rangers(id)
+- treatments.reserve_id references reserves(id)
+
+5. Preventing duplicate treatments:
+Added a unique constraint on treatments:
+CONSTRAINT unique_ranger_animal_reserve UNIQUE (animal_id, ranger_id, reserve_id)
+This prevents inserting the same ranger, animal, and reserve more than once.
+
+6. Investigation query and authentication:
+- Investigation query:
+We join treatments with reserves (and rangers if searching by name),
+filter by the ranger id or name, group by the reserve name,
+and use COUNT(DISTINCT animal_id) to count unique animals per reserve.
+
+- Authentication credentials:
+We send credentials via custom request headers: X-Username and X-Password.
+ This keeps auth consistent for both GET and POST endpoints.
