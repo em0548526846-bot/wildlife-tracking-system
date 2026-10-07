@@ -23,7 +23,7 @@ def read_animal_id() -> int:
 
 def read_collar_code() -> str:
     while True:
-        choice = input("Enter collar code: ").strip()
+        choice = input("Enter collar code: ").strip( )
         if choice[0:4] == "COL-":
             return choice
         else:
