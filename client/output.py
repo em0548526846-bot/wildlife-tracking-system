@@ -14,3 +14,18 @@ def show_last_reserve(result: dict) -> None:
         Description: {result['description']}
         """)
 
+def show_treatments_by_reserve(result: list | dict) -> None:
+    if isinstance(result, dict) and "error" in result:
+        print(f"\nError: {result['error']}")
+        return
+
+    if not result:
+        print("\nNo treatments found for this ranger.")
+        return
+
+    print("\n===== Treatments by Reserve =====")
+    for treatment in result:
+        print(f"Reserve: {treatment['reserve_name']}")
+        print(f"Unique animals treated: {treatment['animals_count']}")
+        print("-" * 30)
+    print("!!!!! Done !!!!!\n")
